@@ -1,3 +1,5 @@
+const User = require('../users/users-model')
+
 function logger(req, res, next) {
   // DO YOUR MAGIC
 
@@ -9,10 +11,24 @@ function logger(req, res, next) {
   next()
 }
 
-function validateUserId(req, res, next) {
+async function validateUserId(req, res, next) {
   // DO YOUR MAGIC
-  console.log('works')
-  next()
+  // console.log('works')
+  try {
+    const user = await User.getById(req.params.id)
+    if (!user) {
+      res.status(404).json({
+        message: 'this user does not exist',
+      })
+    } else {
+      req.user = user
+      next()
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: 'server error finding user',
+    })
+  }
 }
 
 function validateUser(req, res, next) {
