@@ -23,7 +23,7 @@ function validateUser(req, res, next) {
 
 function validatePost(req, res, next) {
   // DO YOUR MAGIC
-  console.log('works')
+  console.log('this still works')
   next()
 }
 
